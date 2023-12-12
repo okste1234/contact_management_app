@@ -37,6 +37,9 @@ function App() {
   return (
     <div className="pt-10 bg-gray-500 h-screen">
       <header className="max-w-7xl m-auto">
+        <div className='text-center text-2xl'>
+          <h3>Contacts Management App</h3>
+        </div>
         {editingContact ? (
           <div>
             <h2>Edit Contact</h2>
