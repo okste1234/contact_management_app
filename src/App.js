@@ -1,25 +1,60 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
 
 function App() {
+
+  const [contacts, setContacts] = useState([]);
+  const [editingContact, setEditingContact] = useState(null);
+
+  const addContact = (newContact) => {
+    setContacts([...contacts, { ...newContact, id: Date.now() }]);
+  };
+
+  const editContact = (id) => {
+    const contactToEdit = contacts.find((contact) => contact.id === id);
+    setEditingContact(contactToEdit);
+  };
+
+  const cancelEdit = () => {
+    setEditingContact(null);
+  };
+
+  const updateContact = (updatedContact) => {
+    const index = contacts.findIndex((contact) => contact.id === updatedContact.id);
+    const updatedContacts = [...contacts];
+    updatedContacts[index] = updatedContact;
+    setContacts(updatedContacts);
+    setEditingContact(null);
+  };
+
+
+  const deleteContact = (id) => {
+    setContacts(contacts.filter((contact) => contact.id !== id));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="pt-10 bg-gray-500 h-screen">
+      <header className="max-w-7xl m-auto">
+        {editingContact ? (
+          <div>
+            <h2>Edit Contact</h2>
+            <ContactForm addContact={updateContact} initialContact={editingContact} />
+            <button onClick={cancelEdit}>Cancel Edit</button>
+          </div>
+        ) : (
+          <ContactForm addContact={addContact} />
+        )}
       </header>
+
+      <main className='max-w-7xl m-auto pt-12'>
+        <ContactList contacts={contacts} editContact={editContact} deleteContact={deleteContact} />
+      </main>
     </div>
   );
 }
 
 export default App;
+
+
