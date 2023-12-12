@@ -1,6 +1,6 @@
 #Contact Managements App
 
-This Project is hosted on Vercel with the link:
+This Project is hosted on Vercel with the link: https://contact-management-app-coral.vercel.app/
 
 It has a form to input new contact details (name, email, and phone number)
 ● Inputs are validated using Regular Expressions
